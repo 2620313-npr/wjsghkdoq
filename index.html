@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>전화</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        samsungBg: '#F4F4F4',
+                        samsungOrange: '#D99147',
+                        samsungOrangeHover: '#C4813B',
+                        samsungTextDark: '#161616',
+                        samsungSubText: '#868686',
+                        samsungNavBg: '#EBEBEB'
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 외부 CSS 링크 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center p-0 md:p-4 font-sans text-samsungTextDark">
+
+    <!-- Mobile Frame Outer Container -->
+    <div class="w-full max-w-md h-screen md:h-[844px] bg-[#F4F4F4] flex flex-col justify-between shadow-2xl relative overflow-hidden md:rounded-[40px] border-gray-300">
+        
+        <!-- TOP STATUS BAR SIMULATION -->
+        <div class="pt-2 px-6 flex justify-between items-center text-xs text-samsungTextDark font-semibold select-none z-10 shrink-0">
+            <div class="flex items-center gap-1">
+                <span>U<sup>+</sup></span>
+                <span id="current-time">9:42</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-xs">
+                <i class="fa-solid fa-volume-xmark text-[10px]"></i>
+                <i class="fa-solid fa-wifi text-[11px]"></i>
+                <span class="text-[10px] font-bold">5G</span>
+                <i class="fa-solid fa-signal text-[10px]"></i>
+                <div class="border border-samsungTextDark rounded px-1 text-[9px] font-bold leading-tight">83</div>
+            </div>
+        </div>
+
+        <!-- TOP HEADER (SEARCH & MENU) -->
+        <div id="top-header" class="px-6 pt-3 pb-1 flex justify-end items-center gap-5 text-samsungOrange shrink-0">
+            <button class="hover:opacity-75 transition" title="검색">
+                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </button>
+            <button class="hover:opacity-75 transition relative" title="더보기">
+                <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
+                <span class="absolute -top-0.5 -right-1 w-2 h-2 bg-samsungOrange rounded-full border border-white"></span>
+            </button>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="flex-1 flex flex-col justify-between overflow-hidden relative">
+
+            <!-- TAB 1: KEYPAD SCREEN -->
+            <div id="tab-keypad" class="h-full flex flex-col justify-between px-6 pb-2 pt-2">
+                <!-- Display Number Section -->
+                <div class="flex-1 flex flex-col justify-end items-center mb-2 px-2 relative min-h-[90px]">
+                    <div id="phone-number-display" class="text-3xl sm:text-4xl font-normal tracking-wide text-center break-all text-samsungTextDark min-h-[48px] flex items-center justify-center">
+                        <!-- Number renders here -->
+                    </div>
+                    <!-- Backspace Button -->
+                    <button id="btn-backspace" class="absolute right-2 bottom-2 text-samsungSubText hover:text-samsungTextDark p-2 hidden active:scale-90">
+                        <i class="fa-solid fa-delete-left text-2xl pointer-events-none"></i>
+                    </button>
+                </div>
+
+                <!-- 3x4 KEYPAD GRID -->
+                <div class="grid grid-cols-3 gap-y-3 gap-x-4 mb-4 select-none max-w-[320px] mx-auto w-full">
+                    <!-- Key 1 -->
+                    <button data-key="1" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">1</span>
+                    </button>
+                    <!-- Key 2 -->
+                    <button data-key="2" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">2</span>
+                        <span class="text-[10px] text-samsungSubText font-medium mt-0.5 tracking-wider pointer-events-none">ABC</span>
+                    </button>
+                    <!-- Key 3 -->
+                    <button data-key="3" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">3</span>
+                        <span class="text-[10px] text-samsungSubText font-medium mt-0.5 tracking-wider pointer-events-none">DEF</span>
+                    </button>
+
+                    <!-- Key 4 -->
+                    <button data-key="4" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">4</span>
+                        <div class="text-[9px] text-samsungSubText leading-none mt-0.5 flex flex-col items-center pointer-events-none">
+                            <span class="font-bold">ㄱㅋ</span>
+                            <span class="tracking-wider">GHI</span>
+                        </div>
+                    </button>
+                    <!-- Key 5 -->
+                    <button data-key="5" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">5</span>
+                        <div class="text-[9px] text-samsungSubText leading-none mt-0.5 flex flex-col items-center pointer-events-none">
+                            <span class="font-bold">ㄴㄹ</span>
+                            <span class="tracking-wider">JKL</span>
+                        </div>
+                    </button>
+                    <!-- Key 6 -->
+                    <button data-key="6" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">6</span>
+                        <div class="text-[9px] text-samsungSubText leading-none mt-0.5 flex flex-col items-center pointer-events-none">
+                            <span class="font-bold">ㄷㅌ</span>
+                            <span class="tracking-wider">MNO</span>
+                        </div>
+                    </button>
+
+                    <!-- Key 7 -->
+                    <button data-key="7" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">7</span>
+                        <div class="text-[9px] text-samsungSubText leading-none mt-0.5 flex flex-col items-center pointer-events-none">
+                            <span class="font-bold">ㅂㅍ</span>
+                            <span class="tracking-wider">PQRS</span>
+                        </div>
+                    </button>
+                    <!-- Key 8 -->
+                    <button data-key="8" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">8</span>
+                        <div class="text-[9px] text-samsungSubText leading-none mt-0.5 flex flex-col items-center pointer-events-none">
+                            <span class="font-bold">ㅅㅎ</span>
+                            <span class="tracking-wider">TUV</span>
+                        </div>
+                    </button>
+                    <!-- Key 9 -->
+                    <button data-key="9" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">9</span>
+                        <div class="text-[9px] text-samsungSubText leading-none mt-0.5 flex flex-col items-center pointer-events-none">
+                            <span class="font-bold">ㅈㅊ</span>
+                            <span class="tracking-wider">WXYZ</span>
+                        </div>
+                    </button>
+
+                    <!-- Key * -->
+                    <button data-key="*" class="key-btn h-16 rounded-full flex items-center justify-center">
+                        <span class="text-3xl font-light leading-none mt-2 pointer-events-none">*</span>
+                    </button>
+                    <!-- Key 0 -->
+                    <button data-key="0" class="key-btn h-16 rounded-full flex flex-col items-center justify-center">
+                        <span class="text-3xl font-light leading-none pointer-events-none">0</span>
+                        <span class="text-[9px] text-samsungSubText font-bold mt-0.5 pointer-events-none">ㅇㅁ</span>
+                    </button>
+                    <!-- Key # -->
+                    <button data-key="#" class="key-btn h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-light leading-none pointer-events-none">#</span>
+                    </button>
+                </div>
+
+                <!-- CALL BUTTON -->
+                <div class="flex justify-center items-center mb-2">
+                    <button id="btn-call" class="call-btn w-16 h-16 bg-samsungOrange text-white rounded-full flex items-center justify-center shadow-md relative">
+                        <i class="fa-solid fa-phone text-2xl -scale-x-100 pointer-events-none"></i>
+                        <span class="absolute text-[9px] font-semibold tracking-tighter top-3 right-3 text-white opacity-80 pointer-events-none">VoLTE</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: RECENTS SCREEN -->
+            <div id="tab-recents" class="h-full hidden flex-col px-4 pt-2 overflow-y-auto no-scrollbar">
+                <h2 class="text-xl font-bold px-3 py-2 text-samsungTextDark">최근 기록</h2>
+                <div id="recents-list" class="flex flex-col gap-1 pb-4">
+                    <!-- Recent calls inserted dynamically -->
+                </div>
+            </div>
+
+            <!-- TAB 3: CONTACTS SCREEN -->
+            <div id="tab-contacts" class="h-full hidden flex-col px-4 pt-2 overflow-y-auto no-scrollbar">
+                <h2 class="text-xl font-bold px-3 py-2 text-samsungTextDark">연락처</h2>
+                <div class="flex flex-col gap-1 pb-4" id="contacts-list">
+                    <!-- Mock Contacts -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <div class="px-6 pb-4 pt-1 shrink-0">
+            <div class="bg-samsungNavBg rounded-full p-1 flex justify-between items-center shadow-inner">
+                <!-- Keypad Tab -->
+                <button id="nav-keypad" onclick="switchTab('keypad')" class="flex-1 py-2.5 rounded-full flex items-center justify-center gap-1.5 bg-white text-samsungTextDark shadow-sm font-semibold text-sm">
+                    <i class="fa-solid fa-grip-vertical text-xs pointer-events-none"></i>
+                    <span class="pointer-events-none">키패드</span>
+                </button>
+                <!-- Recents Tab -->
+                <button id="nav-recents" onclick="switchTab('recents')" class="flex-1 py-2.5 rounded-full flex items-center justify-center gap-1.5 text-samsungSubText font-medium text-sm">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs pointer-events-none"></i>
+                    <span class="pointer-events-none">최근기록</span>
+                </button>
+                <!-- Contacts Tab -->
+                <button id="nav-contacts" onclick="switchTab('contacts')" class="flex-1 py-2.5 rounded-full flex items-center justify-center gap-1.5 text-samsungSubText font-medium text-sm">
+                    <i class="fa-regular fa-user text-xs pointer-events-none"></i>
+                    <span class="pointer-events-none">연락처</span>
+                </button>
+            </div>
+
+            <!-- Android Bottom Navigation Bar Handle -->
+            <div class="flex justify-center items-center gap-12 mt-3 text-samsungSubText text-sm opacity-60">
+                <i class="fa-solid fa-bars"></i>
+                <i class="fa-regular fa-square"></i>
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+        </div>
+
+        <!-- FULLSCREEN SIMULATED CALL IN PROGRESS MODAL -->
+        <div id="call-modal" class="absolute inset-0 bg-[#2C3437] text-white flex flex-col justify-between p-6 z-50 transform translate-y-full transition-transform duration-300 ease-in-out">
+            <!-- Upper Status Info -->
+            <div class="pt-6 flex flex-col items-center text-center">
+                <span class="text-sm opacity-70 mb-1" id="call-status-text">통화 연결 중...</span>
+                <h2 id="call-target-number" class="text-3xl font-normal mb-2 tracking-wide">010-0000-0000</h2>
+                <span id="call-timer" class="text-sm font-mono opacity-80">00:00</span>
+            </div>
+
+            <!-- Avatar / Icon Placeholder -->
+            <div class="flex justify-center items-center my-auto">
+                <div class="w-28 h-28 bg-gray-600/50 rounded-full flex items-center justify-center border-2 border-gray-400/30">
+                    <i class="fa-solid fa-user text-5xl text-gray-300"></i>
+                </div>
+            </div>
+
+            <!-- In-Call Control Grid -->
+            <div class="mb-8">
+                <div class="grid grid-cols-3 gap-6 mb-10 max-w-xs mx-auto">
+                    <button class="flex flex-col items-center gap-2 group">
+                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center group-active:bg-white/20">
+                            <i class="fa-solid fa-microphone-slash text-xl"></i>
+                        </div>
+                        <span class="text-xs opacity-70">음소거</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-2 group">
+                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center group-active:bg-white/20">
+                            <i class="fa-solid fa-table-cells text-xl"></i>
+                        </div>
+                        <span class="text-xs opacity-70">키패드</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-2 group">
+                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center group-active:bg-white/20">
+                            <i class="fa-solid fa-volume-high text-xl"></i>
+                        </div>
+                        <span class="text-xs opacity-70">스피커</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-2 group">
+                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center group-active:bg-white/20">
+                            <i class="fa-solid fa-plus text-xl"></i>
+                        </div>
+                        <span class="text-xs opacity-70">통화 추가</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-2 group">
+                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center group-active:bg-white/20">
+                            <i class="fa-solid fa-video text-xl"></i>
+                        </div>
+                        <span class="text-xs opacity-70">영상 통화</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-2 group">
+                        <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center group-active:bg-white/20">
+                            <i class="fa-solid fa-circle-user text-xl"></i>
+                        </div>
+                        <span class="text-xs opacity-70">연락처</span>
+                    </button>
+                </div>
+
+                <!-- END CALL BUTTON -->
+                <div class="flex justify-center">
+                    <button id="btn-end-call" class="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg active:scale-95">
+                        <i class="fa-solid fa-phone-flip text-2xl rotate-[135deg] pointer-events-none"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 외부 JS 링크 -->
+    <script src="script.js"></script>
+</body>
+</html>
