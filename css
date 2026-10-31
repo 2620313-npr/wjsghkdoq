@@ -1,0 +1,35 @@
+.key-btn, .call-btn, #btn-backspace {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: none !important; /* 버튼 지연 반응의 핵심 원인이었던 애니메이션 지연 제거 */
+}
+
+/* 터치하는 순간 실시간 배경 및 눌림 효과 적용 */
+.key-btn.pressed {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    transform: scale(0.95);
+}
+
+.call-btn:active, .call-btn.pressed {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}
+
+/* Custom scrollbar hiding */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Lock body scroll for app-like experience */
+body {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
